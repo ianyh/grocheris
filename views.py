@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 
 from grocheris.models import GroceryItem
+from grocheris.forms import GroceryItemForm
 
 def index(request):
     return view_in_stock(request)
@@ -11,7 +12,10 @@ def view_in_stock(request):
                               locals())
 
 def view_shopping_list(request):
-    pass
+    add_form = GroceryItemForm()
+    items = GroceryItem.objects.filter(is_low=True)
+    return render_to_response('grocheris/view_shopping_list.html',
+                              locals())
 
 def view_item(request, item_id=None):
     pass
