@@ -30,7 +30,7 @@ class GroceryItem(models.Model):
     is_out = models.BooleanField()
     stock_date = models.DateTimeField()
     votes = models.IntegerField(default=0)
-    locations = models.ManyToManyField(Location)
+    locations = models.ManyToManyField(Location, blank=True)
     one_shot = models.BooleanField()
     
     def __unicode__(self):
