@@ -1,17 +1,39 @@
 {% extends 'grocheris/base.html' %}
 
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#add_item_form').submit(function(event) {
+	event.preventDefault();
+	var form = this;
+	$.post("/add_item_form",
+	       {},
+	       function(responseData) {
+		   $('#items_table > tbody:last').prepend(responseData.response_text);
+	       },
+	       "json"
+	      );
+    }		 
+});
+</script>
+{% endblock %}
+
 {% block title %}Shopping list{% endblock %}
 
 {% block content %}
 
-{{ add_form }}
+<form id="add_item_form" method="post">
+  <input type="submit" value="Add Item" />
+</form>
 
+<table id="items_table">
 {% if items %}
-<table>
   {% for item in items %}
   <tr><td>{{ item }}</td></tr>
   {% endfor %}
-</table>
+{% else %}
+  <tr><td></td></tr>
 {% endif %}
+</table>
   
 {% endblock %}

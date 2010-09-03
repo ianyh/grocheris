@@ -17,6 +17,10 @@ def view_shopping_list(request):
     return render_to_response('grocheris/view_shopping_list.html',
                               locals())
 
+def add_item_form(request):
+    add_form = GroceryItemForm()
+    return HttpResponse('<tr><td>' + add_form.as_table + '</td></tr>')
+
 def view_item(request, item_id=None):
     pass
 
