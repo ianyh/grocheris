@@ -6,7 +6,7 @@ def index(request):
     return view_in_stock(request)
 
 def view_in_stock(request):
-    items = GroceryItem.objects.filter(in_out=False)
+    items = GroceryItem.objects.filter(is_out=False)
     return render_to_response('grocheris/view_in_stock.html',
                               locals())
 
