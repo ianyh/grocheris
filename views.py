@@ -3,10 +3,12 @@ from django.shortcuts import render_to_response
 from grocheris.models import GroceryItem
 
 def index(request):
-    pass
+    return view_in_stock(request)
 
 def view_in_stock(request):
-    pass
+    items = GroceryItem.objects.filter(in_out=False)
+    return render_to_response('grocheris/view_in_stock.html',
+                              locals())
 
 def view_shopping_list(request):
     pass
