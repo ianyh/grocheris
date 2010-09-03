@@ -1,6 +1,6 @@
 from django.db import models
 
-import tagging
+#import tagging
 
 class Location(models.Model):
     """
@@ -36,5 +36,5 @@ class GroceryItem(models.Model):
     def __unicode__(self):
         return self.name
 
-tagging.register(LocationSection)
-tagging.register(GroceryItem)
+#tagging.register(LocationSection)
+#tagging.register(GroceryItem)
