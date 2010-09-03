@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+  <head>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    
+    <title>{% block title %}{% endblock %}</title>    
+  </head>
+
+  <body>
+    <div id="content">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+
+    <div id="nav">
+      <a href="/stock">Stuff we have</a>
+      <a href="/shop">Shopping list</a>
+    </div>
+  </body>
+</html>
