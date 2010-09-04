@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
+from datetime import datetime
+
 from grocheris.models import GroceryItem
 from grocheris.forms import GroceryItemForm
 
@@ -18,9 +20,22 @@ def view_shopping_list(request):
     return render_to_response('grocheris/view_shopping_list.html',
                               locals())
 
-def add_item_form(request):
-    add_form = GroceryItemForm()
-    return HttpResponse('<tr><td>' + add_form.as_table + '</td></tr>')
+def add_item(request):
+    if request.method == "POST":
+        form = GroceryItemForm(request.POST)
+        if form.is_valid():
+            item = GroceryItem()
+            item.name = request.POST['name']
+            item.stock_date = datetime.now()
+            if 'locations' in request.POST:
+                item.locations = request.POST['locations']
+            item.save()
+            return HttpResponse()
+        else:
+            return HttpResponse()
+    else:
+        return HttpResponse()
+    
 
 def view_item(request, item_id=None):
     pass

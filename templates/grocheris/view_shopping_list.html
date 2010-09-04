@@ -1,20 +1,26 @@
 {% extends 'grocheris/base.html' %}
 
 {% block script %}
+{{ add_form.media }}
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#add_item_form').submit(function(event) {
-	event.preventDefault();
-	var form = this;
-	$.post("/add_item_form",
-	       {},
-	       function(responseData) {
-		   $('#items_table > tbody:last').prepend(responseData.response_text);
-	       },
-	       "json"
-	      );
-    }		 
-});
+    $(document).ready(function() {
+	var options = {
+	    url: '/add_item/',
+	    dataType: 'json',
+	    success: addItemRow,
+	    beforeSubmit: beforeForm
+	};
+
+	$('#add_item_form').ajaxForm(options);
+    });
+
+function addItemRow(data) {
+    console.log('got data: ' + data);
+}
+
+function beforeForm() {
+    console.log('submitting...');
+}
 </script>
 {% endblock %}
 
@@ -23,17 +29,18 @@ $(document).ready(function() {
 {% block content %}
 
 <form id="add_item_form" method="post">
+  <table>
+    {{ add_form.as_table }}
+  </table>
   <input type="submit" value="Add Item" />
 </form>
 
 <table id="items_table">
-{% if items %}
+  {% if items %}
   {% for item in items %}
   <tr><td>{{ item }}</td></tr>
   {% endfor %}
-{% else %}
-  <tr><td></td></tr>
-{% endif %}
+  {% endif %}
 </table>
   
 {% endblock %}
