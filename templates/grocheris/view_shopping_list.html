@@ -16,7 +16,10 @@
 
 function addItemRow(data) {
     if (data) {
-	$('#items_table > tbody:first').prepend('<tr><td style="display:none;">' + data['name'] + '</td></tr>');
+	row = '<tr><td id="item-' + data['id'] + '" style="display:none;">' +
+	    data['name'] + ' <a onClick="buyItem(' + data['id'] + ');">bought it</a>' +
+	    '</td></tr>';
+	$('#items_table > tbody:first').prepend(row);
 	$('#items_table td:first').fadeIn('fast');
     }
 }

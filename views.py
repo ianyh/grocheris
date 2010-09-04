@@ -34,7 +34,7 @@ def add_item(request):
                 item.locations = request.POST['locations']
             item.save()
             
-            json = simplejson.dumps({ 'name' : item.name })
+            json = simplejson.dumps({ 'name' : item.name, 'id' : item.id })
             return HttpResponse(json, mimetype='application/json')
         else:
             return HttpResponse()
