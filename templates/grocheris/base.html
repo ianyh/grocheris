@@ -48,12 +48,17 @@
       .low {
 	  background: #ffffe0;
       }
+
+      .out {
+	  background: #f08080;
+      }
     </style>
   </head>
 
   <body>
 
     <div id="nav">
+      <a href="{% url index %}">All the stuff</a> <br />
       <a href="{% url stock %}">Stuff we have</a> <br />
       <a href="{% url shop %}">Shopping list</a>
     </div>

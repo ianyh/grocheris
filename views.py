@@ -9,8 +9,10 @@ from grocheris.models import GroceryItem
 from grocheris.forms import GroceryItemForm
 
 @login_required
-def index(request):
-    return view_in_stock(request)
+def view_all(request):
+    items = GroceryItem.objects.all()
+    return render_to_response('grocheris/view_all.html',
+                              locals())
 
 @login_required
 def view_in_stock(request):

@@ -1,0 +1,83 @@
+{% extends 'grocheris/base.html' %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function() {
+	var options = {
+	    url: '{% url add_item %}',
+	    dataType: 'json',
+	    success: addItemRow,
+	    beforeSubmit: beforeForm
+	};
+
+	$('#add_item_form').ajaxForm(options);
+    });
+
+function addItemRow(data) {
+    if (data) {
+	row = '<tr><td class="item-row" id="item-' + data['id'] + '" style="display:none;">' +
+	    '<div class="item-row-nav"><input type="button" value="bought it" onClick="buyItem(' + data['id'] + ');" /></div>' +
+	    data['name'] + '</td></tr>';
+	$('#item-table > tbody:first').prepend(row);
+	$('#item-table td:first').fadeIn('fast');
+    }
+}
+
+function buyItem(id) {
+    url = '{% url buy item_id=0 %}'.replace('0', id);
+    $.post(url,
+	   function(data) {
+	       $('#item-' + data['id'] + '-low-button').removeAttr('disabled');
+	       $('#item-' + data['id'] + '-out-button').removeAttr('disabled');
+	       $('#item-' + data['id']).removeClass('low out');
+	   });
+}
+
+function beforeForm() {
+}
+
+function lowOn(id) {
+    var url = '{% url low item_id=0 %}'.replace('0', id);
+    $.post(url,
+	   function (data) {
+	       $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
+	       $('#item-' + data['id']).addClass('low');
+	   });
+}
+
+function outOf(id) {
+    var url = '{% url out item_id=0 %}'.replace('0', id);
+    $.post(url,
+	   function (data) {
+	       $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
+	       $('#item-' + data['id'] + '-out-button').attr('disabled', 'disabled');
+	       $('#item-' + data['id']).addClass('out');
+	   });
+}
+
+</script>
+{% endblock %}
+
+{% block title %}Stuff we have{% endblock %}
+
+{% block content %}
+
+<h2>All the stuff</h2>
+
+{% if items %}
+<table id="item-table">
+  {% for item in items %}
+  <tr><td class="item-row {% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}" id="item-{{ item.id }}">
+      <div class="item-row-nav">
+	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" {% if item.is_low %}disabled="disabled" {% endif %}/>
+	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" {% if item.is_out %}disabled="disabled" {% endif %}/>
+	<input id="item-{{ item.id }}-buy-button" type="button" value="bought it" onClick="buyItem({{ item.id }})" />
+      </div>
+
+      {{ item }}
+  </td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+  
+{% endblock %}
