@@ -27,6 +27,8 @@ def add_item(request):
             item = GroceryItem()
             item.name = request.POST['name']
             item.stock_date = datetime.now()
+            item.is_out = True
+            item.is_low = True
             if 'locations' in request.POST:
                 item.locations = request.POST['locations']
             item.save()
