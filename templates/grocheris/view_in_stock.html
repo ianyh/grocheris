@@ -3,7 +3,7 @@
 {% block script %}
 <script type="text/javascript">
 function lowOn(id) {
-    var url = '/item/' + id + '/low/';
+    var url = '{% url low item_id=0 %}'.replace('0', id);
     $.post(url,
 	   function (data) {
 	       $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
@@ -12,7 +12,7 @@ function lowOn(id) {
 }
 
 function outOf(id) {
-    var url = '/item/' + id + '/out/';
+    var url = '{% url out item_id=0 %}'.replace('0', id);
     $.post(url,
 	   removeItemRow);
 }
@@ -37,17 +37,8 @@ function removeItemRow(data) {
   {% for item in items %}
   <tr><td class="item-row {% if item.is_low %}low{% endif %}" id="item-{{ item.id }}">
       <div class="item-row-nav">
-	{% if item.is_low %}
-	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" disabled="disabled" />
-	{% else %}
-	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" />
-	{% endif %}
-	
-	{% if item.is_out %}
-	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" disabled="disabled" />
-	{% else %}
-	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" />
-	{% endif %}
+	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" {% if item.is_low %}disabled="disabled" {% endif %}/>
+	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" {% if item.is_out %}disabled="disabled" {% endif %}/>
       </div>
 
       {{ item }}

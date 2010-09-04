@@ -5,7 +5,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
 	var options = {
-	    url: '/add_item/',
+	    url: '{% url add_item %}',
 	    dataType: 'json',
 	    success: addItemRow,
 	    beforeSubmit: beforeForm
@@ -31,7 +31,7 @@ function removeItemRow(data) {
 }
 
 function buyItem(id) {
-    url = '/item/' + id + '/buy/'
+    url = '{% url buy item_id=0 %}'.replace('0', id);
     $.post(url,
 	   removeItemRow);
 }
@@ -65,6 +65,8 @@ function beforeForm() {
       {{ item }}
   </td></tr>
   {% endfor %}
+  {% else %}
+  <tr><td></td></tr>
   {% endif %}
 </table>
   
