@@ -15,11 +15,13 @@
     });
 
 function addItemRow(data) {
-    console.log('got data: ' + data);
+    if (data) {
+	$('#items_table > tbody:first').prepend('<tr><td style="display:none;">' + data['name'] + '</td></tr>');
+	$('#items_table td:first').fadeIn('fast');
+    }
 }
 
 function beforeForm() {
-    console.log('submitting...');
 }
 </script>
 {% endblock %}

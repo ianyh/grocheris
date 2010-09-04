@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.utils import simplejson
 
 from datetime import datetime
 
@@ -32,7 +33,9 @@ def add_item(request):
             if 'locations' in request.POST:
                 item.locations = request.POST['locations']
             item.save()
-            return HttpResponse()
+            
+            json = simplejson.dumps({ 'name' : item.name })
+            return HttpResponse(json, mimetype='application/json')
         else:
             return HttpResponse()
     else:
