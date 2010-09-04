@@ -30,21 +30,27 @@ function removeItemRow(data) {
 
 {% block content %}
 
-{% if items %}
-<table>
-  {% for item in items %}
-  <tr><td id="item-{{ item.id }}">{{ item }}
-      {% if item.is_low %}
-      <input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" disabled="disabled" />
-      {% else %}
-      <input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" />
-      {% endif %}
+<h2>Stuff we have</h2>
 
-      {% if item.is_out %}
-      <input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" disabled="disabled" />
-      {% else %}
-      <input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" />
-      {% endif %}
+{% if items %}
+<table id="item-table">
+  {% for item in items %}
+  <tr><td class="item-row {% if item.is_low %}low{% endif %}" id="item-{{ item.id }}">
+      <div class="item-row-nav">
+	{% if item.is_low %}
+	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" disabled="disabled" />
+	{% else %}
+	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" />
+	{% endif %}
+	
+	{% if item.is_out %}
+	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" disabled="disabled" />
+	{% else %}
+	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" />
+	{% endif %}
+      </div>
+
+      {{ item }}
   </td></tr>
   {% endfor %}
 </table>

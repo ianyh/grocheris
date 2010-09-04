@@ -5,7 +5,7 @@ from grocheris.models import GroceryItem
 class GroceryItemForm(forms.ModelForm):
     class Meta:
         model = GroceryItem
-        fields = ('name', 'locations')
+        fields = ('name',)
 
     class Media:
         js = ('http://github.com/malsup/form/raw/master/jquery.form.js',)

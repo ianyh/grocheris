@@ -16,11 +16,11 @@
 
 function addItemRow(data) {
     if (data) {
-	row = '<tr><td id="item-' + data['id'] + '" style="display:none;">' +
-	    data['name'] + ' <input type="button" value="bought it" onClick="buyItem(' + data['id'] + ');" />' +
-	    '</td></tr>';
-	$('#items_table > tbody:first').prepend(row);
-	$('#items_table td:first').fadeIn('fast');
+	row = '<tr><td class="item-row" id="item-' + data['id'] + '" style="display:none;">' +
+	    '<div class="item-row-nav"><input type="button" value="bought it" onClick="buyItem(' + data['id'] + ');" /></div>' +
+	    data['name'] + '</td></tr>';
+	$('#item-table > tbody:first').prepend(row);
+	$('#item-table td:first').fadeIn('fast');
     }
 }
 
@@ -45,18 +45,24 @@ function beforeForm() {
 
 {% block content %}
 
-<form id="add_item_form" method="post">
-  <table>
-    {{ add_form.as_table }}
-  </table>
-  <input type="submit" value="Add Item" />
-</form>
+<h2>Shopping List</h2>
 
-<table id="items_table">
+<div id="add-item" style="margin-top: 10px; margin-bottom: 10px;">
+  <form id="add_item_form" method="post">
+    {{ add_form }}
+    <input type="submit" value="Add Item" />
+  </form>
+</div>
+
+<table id="item-table">
   {% if items %}
   {% for item in items %}
-  <tr><td id="item-{{ item.id }}">{{ item }} 
-      <input type="button" value="bought it" onClick="buyItem({{ item.id }})" />
+  <tr><td class="item-row" id="item-{{ item.id }}">
+      <div class="item-row-nav">
+	<input type="button" value="bought it" onClick="buyItem({{ item.id }})" />
+      </div>
+      
+      {{ item }}
   </td></tr>
   {% endfor %}
   {% endif %}
