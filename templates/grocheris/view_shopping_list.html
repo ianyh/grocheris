@@ -17,7 +17,7 @@
 function addItemRow(data) {
     if (data) {
 	row = '<tr><td id="item-' + data['id'] + '" style="display:none;">' +
-	    data['name'] + ' <a onClick="buyItem(' + data['id'] + ');">bought it</a>' +
+	    data['name'] + ' <a href="#" onClick="buyItem(' + data['id'] + ');">bought it</a>' +
 	    '</td></tr>';
 	$('#items_table > tbody:first').prepend(row);
 	$('#items_table td:first').fadeIn('fast');
@@ -55,7 +55,7 @@ function beforeForm() {
 <table id="items_table">
   {% if items %}
   {% for item in items %}
-  <tr><td id="item-{{ item.id }}">{{ item }} <a onClick="buyItem({{ item.id }});">bought it</a></td></tr>
+  <tr><td id="item-{{ item.id }}">{{ item }} <a href="#" onClick="buyItem({{ item.id }});">bought it</a></td></tr>
   {% endfor %}
   {% endif %}
 </table>

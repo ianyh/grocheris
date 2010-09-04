@@ -33,7 +33,10 @@ function removeItemRow(data) {
 {% if items %}
 <table>
   {% for item in items %}
-  <tr><td id="item-{{ item.id }}">{{ item }} <a onClick="lowOn({{ item.id }})">we're low</a> <a onClick="outOf({{ item.id }});">we're out</a></td></tr>
+  <tr><td id="item-{{ item.id }}">{{ item }} 
+      <a href="#" onClick="lowOn({{ item.id }})">we're low</a> 
+      <a href="#" onClick="outOf({{ item.id }});">we're out</a>
+  </td></tr>
   {% endfor %}
 </table>
 {% endif %}
