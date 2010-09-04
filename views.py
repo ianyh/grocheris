@@ -52,6 +52,30 @@ def buy_item(request, item_id=None):
 
             json = simplejson.dumps({ 'id' : item.id })
             return HttpResponse(json, mimetype='application/json')
+
+    return HttpResponse(status=404)
+
+def low_item(request, item_id=None):
+    item = GroceryItem.objects.get(pk=item_id)
+    if item:
+        item.is_low = True
+        item.save()
+        
+        json = simplejson.dumps({ 'id' : item.id })
+        return HttpResponse(json, mimetype='application/json')
+    
+    return HttpRespinse(status=404)
+
+def out_item(request, item_id=None):
+    item = GroceryItem.objects.get(pk=item_id)
+    if item:
+        item.is_low = True
+        item.is_out = True
+        item.save()
+
+        json = simplejson.dumps({ 'id' : item.id })
+        return HttpResponse(json, mimetype='application/json')
+    
     return HttpResponse(status=404)
 
 def view_item(request, item_id=None):
