@@ -41,6 +41,18 @@ def add_item(request):
     else:
         return HttpResponse()
     
+def buy_item(request, item_id=None):
+    if request.method == 'POST':
+        item = GroceryItem.objects.get(pk=item_id)
+        if item:
+            item.is_low = False
+            item.is_out = False
+            item.stock_date = datetime.now()
+            item.save()
+
+            json = simplejson.dumps({ 'id' : item.id })
+            return HttpResponse(json, mimetype='application/json')
+    return HttpResponse(status=404)
 
 def view_item(request, item_id=None):
     pass

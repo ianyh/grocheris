@@ -21,6 +21,18 @@ function addItemRow(data) {
     }
 }
 
+function removeItemRow(data) {
+    if (data) {
+	$('#item-' + data['id']).fadeOut('fast');
+    }
+}
+
+function buyItem(id) {
+    url = '/item/' + id + '/buy/'
+    $.post(url,
+	   removeItemRow);
+}
+
 function beforeForm() {
 }
 </script>
@@ -40,7 +52,7 @@ function beforeForm() {
 <table id="items_table">
   {% if items %}
   {% for item in items %}
-  <tr><td>{{ item }}</td></tr>
+  <tr><td id="item-{{ item.id }}">{{ item }} <a onClick="buyItem({{ item.id }});">bought it</a></td></tr>
   {% endfor %}
   {% endif %}
 </table>
