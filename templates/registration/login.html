@@ -1,0 +1,22 @@
+{% extends 'grocheris/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<h2>Login</h2>
+
+{% if form.errors %}
+Your username and password did not match.
+{% endif %}
+
+<form method="post" action"{% url django.contrib.auth.views.login %}">
+<table>
+  {{ form }}
+</table>
+
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}
