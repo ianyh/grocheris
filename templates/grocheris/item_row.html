@@ -1,13 +1,7 @@
 {% load grocheris_extras %}
 
   <tr>
-    <td class="item-row {% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}" id="item-{{ item.id }}">
-      <div class="delete">
-	<a href="" onClick="deleteItem({{ item.id }}); return false;">
-	  <img src="{% media 'delete.png' %}" />
-	</a>
-      </div>
-      
+    <td class="item-row {% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}" id="item-{{ item.id }}">      
       <div class="item-row-nav">
 	{% if show_low %}
 	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" {% if item.is_low %}disabled="disabled" {% endif %}/>
@@ -21,6 +15,7 @@
       </div>
 
       <div class="item-row-name">
+	<input id="{{ item.id }}" type="checkbox" />
 	{{ item }}
       </div>
     </td>

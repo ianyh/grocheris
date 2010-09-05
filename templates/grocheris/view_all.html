@@ -3,65 +3,12 @@
 {% block script %}
 <script type="text/javascript">
     $(document).ready(function() {
-	$('.item-row, .item-row-nav, .delete').mouseenter(function() {
-	    $('.delete, .item-row-nav', this).css('visibility', 'visible');
+	$('.item-row, .item-row-nav').mouseenter(function() {
+	    $('.item-row-nav', this).css('visibility', 'visible');
 	}).mouseleave(function() {
-	    $('.delete, .item-row-nav, .delete', this).css('visibility', 'hidden');
+	    $('.item-row-nav', this).css('visibility', 'hidden');
 	});
     });
-
-function addItemRow(data) {
-    if (data) {
-	row = '<tr><td class="item-row" id="item-' + data['id'] + '" style="display:none;">' +
-	    '<div class="item-row-nav"><input type="button" value="bought it" onClick="buyItem(' + data['id'] + ');" /></div>' +
-	    data['name'] + '</td></tr>';
-	$('#item-table > tbody:first').prepend(row);
-	$('#item-table td:first').fadeIn('fast');
-    }
-}
-
-function buyItem(id) {
-    url = '{% url buy item_id=0 %}'.replace('0', id);
-    $.post(url,
-	   function(data) {
-	       $('#item-' + data['id'] + '-low-button').removeAttr('disabled');
-	       $('#item-' + data['id'] + '-out-button').removeAttr('disabled');
-	       $('#item-' + data['id']).removeClass('low out');
-	   });
-}
-
-function beforeForm() {
-}
-
-function lowOn(id) {
-    var url = '{% url low item_id=0 %}'.replace('0', id);
-    $.post(url,
-	   function (data) {
-	       $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
-	       $('#item-' + data['id']).addClass('low');
-	   });
-}
-
-function outOf(id) {
-    var url = '{% url out item_id=0 %}'.replace('0', id);
-    $.post(url,
-	   function (data) {
-	       $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
-	       $('#item-' + data['id'] + '-out-button').attr('disabled', 'disabled');
-	       $('#item-' + data['id']).addClass('out');
-	   });
-}
-
-function deleteItem(id) {
-    var url = '{% url delete item_id=0 %}'.replace('0', id);
-    $.post(url,
-	   function(data) {
-	       if (data) {
-		   $('#item-' + data['id']).fadeOut('fast');
-	       }
-	   });
-}
-
 </script>
 {% endblock %}
 
@@ -71,8 +18,20 @@ function deleteItem(id) {
 
 <h2>All the stuff</h2>
 
+<input type="button" value="delete" onClick="deleteSelectedItems();" />
+<input type="button" value="we're low" onClick="lowSelectedItems();" />
+<input type="button" value="we're out" onClick="outSelectedItems();" />
+<input type="button" value="bought it" onClick="buySelectedItems();" />
+
 {% if items %}
 <table id="item-table">
+  <tr>
+    <td class="item-row">
+      <div class="item-row-name">
+	<input type="checkbox" onClick="toggleSelection(this);" />
+      </div>
+    </td>
+  </tr>
   {% for item in items %}
   {% include 'grocheris/item_row.html' %}
   {% endfor %}
