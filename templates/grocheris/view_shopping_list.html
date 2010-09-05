@@ -69,17 +69,7 @@ function beforeForm() {
 <table id="item-table">
   {% if items %}
   {% for item in items %}
-  <tr><td class="item-row" id="item-{{ item.id }}">
-      <div class="delete">
-	<input type="button" value="delete" onClick="deleteItem({{ item.id }});" />
-      </div>      
-
-      <div class="item-row-nav">
-	<input type="button" value="bought it" onClick="buyItem({{ item.id }})" />
-      </div>
-      
-      {{ item }}
-  </td></tr>
+  {% include 'grocheris/item_row.html' %}
   {% endfor %}
   {% else %}
   <tr><td></td></tr>

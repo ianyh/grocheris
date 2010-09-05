@@ -43,18 +43,7 @@ function removeItemRow(data) {
 {% if items %}
 <table id="item-table">
   {% for item in items %}
-  <tr><td class="item-row {% if item.is_low %}low{% endif %}" id="item-{{ item.id }}">
-      <div class="delete">
-	<input type="button" value="delete" onClick="deleteItem({{ item.id }});" />
-      </div>
-      
-      <div class="item-row-nav">
-	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" {% if item.is_low %}disabled="disabled" {% endif %}/>
-	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" {% if item.is_out %}disabled="disabled" {% endif %}/>
-      </div>
-
-      {{ item }}
-  </td></tr>
+  {% include 'grocheris/item_row.html' %}
   {% endfor %}
 </table>
 {% endif %}

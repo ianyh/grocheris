@@ -1,0 +1,25 @@
+  <tr>
+    <td class="item-row {% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}" id="item-{{ item.id }}">
+      <div class="delete">
+	<a href="" onClick="deleteItem({{ item.id }}); return false;">
+	  <img src="/media/delete.png" />
+	</a>
+      </div>
+      
+      <div class="item-row-nav">
+	{% if show_low %}
+	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" {% if item.is_low %}disabled="disabled" {% endif %}/>
+	{% endif %}
+	{% if show_out %}
+	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" {% if item.is_out %}disabled="disabled" {% endif %}/>
+	{% endif %}
+	{% if show_buy %}
+	<input id="item-{{ item.id }}-buy-button" type="button" value="bought it" onClick="buyItem({{ item.id }})" />
+	{% endif %}
+      </div>
+
+      <div class="item-row-name">
+	{{ item }}
+      </div>
+    </td>
+  </tr>

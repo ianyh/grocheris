@@ -11,12 +11,17 @@ from grocheris.forms import GroceryItemForm
 @login_required
 def view_all(request):
     items = GroceryItem.objects.all()
+    show_low = True
+    show_out = True
+    show_buy = True
     return render_to_response('grocheris/view_all.html',
                               locals())
 
 @login_required
 def view_in_stock(request):
     items = GroceryItem.objects.filter(is_out=False)
+    show_low = True
+    show_out = True
     return render_to_response('grocheris/view_in_stock.html',
                               locals())
 
@@ -24,6 +29,7 @@ def view_in_stock(request):
 def view_shopping_list(request):
     add_form = GroceryItemForm()
     items = GroceryItem.objects.filter(is_low=True)
+    show_buy = True
     return render_to_response('grocheris/view_shopping_list.html',
                               locals())
 
