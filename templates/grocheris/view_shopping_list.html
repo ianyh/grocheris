@@ -12,14 +12,26 @@
 	};
 
 	$('#add_item_form').ajaxForm(options);
+
+	$('.item-row, .item-row-nav, .delete').mouseenter(function() {
+	    $('.delete, .item-row-nav', this).css('visibility', 'visible');
+	}).mouseleave(function() {
+	    $('.delete, .item-row-nav, .delete', this).css('visibility', 'hidden');
+	});
     });
 
 function addItemRow(data) {
     if (data) {
 	row = '<tr><td class="item-row" id="item-' + data['id'] + '" style="display:none;">' +
+	    '<div class="delete"><input type="button" value="delete" onClick="deleteItem(' + data['id'] + ');" /></div>' + 
 	    '<div class="item-row-nav"><input type="button" value="bought it" onClick="buyItem(' + data['id'] + ');" /></div>' +
 	    data['name'] + '</td></tr>';
 	$('#item-table > tbody:first').prepend(row);
+	$('#item-table td:first').mouseenter(function() {
+	    $('.delete, .item-row-nav', this).css('visibility', 'visible');
+	}).mouseleave(function() {
+	    $('.delete, .item-row-nav, .delete', this).css('visibility', 'hidden');
+	});	    
 	$('#item-table td:first').fadeIn('fast');
     }
 }
@@ -58,6 +70,10 @@ function beforeForm() {
   {% if items %}
   {% for item in items %}
   <tr><td class="item-row" id="item-{{ item.id }}">
+      <div class="delete">
+	<input type="button" value="delete" onClick="deleteItem({{ item.id }});" />
+      </div>      
+
       <div class="item-row-nav">
 	<input type="button" value="bought it" onClick="buyItem({{ item.id }})" />
       </div>
