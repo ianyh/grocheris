@@ -130,10 +130,31 @@ def view_item(request, item_id=None):
             return HttpResponse(json, mimetype='application/json')
     return HttpResponse()
 
+def vote_up(request, item_id=None):
+    if request.method == 'POST':
+        item = GroceryItem.objects.get(pk=item_id)
+        if item:
+            item.votes += 1
+            item.save()
+
+            json = simplejson.dumps({ 'votes' : item.votes })
+            return HttpResponse(json, mimetype='application/json')
+    raise Http404()
+
+def vote_down(request, item_id=None):
+    if request.method == 'POST':
+        item = GroceryItem.objects.get(pk=item_id)
+        if item:
+            if item.votes > 0:
+                item.votes -= 1
+                item.save()
+            
+            json = simplejson.dumps({ 'votes' : item.votes })
+            return HttpResponse(json, mimetype='application/json')
+
+    raise Http404()
+    
 """
 def tag_item(request, item_id=None):
-    pass
-
-def vote(request, item_id=None):
     pass
 """

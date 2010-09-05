@@ -34,6 +34,12 @@ function afterBuy(data) {
     $('#item-' + data['id'] + ' > td').removeClass('low out');
 }
 
+function afterVoteUp(data) {
+}
+
+function afterVoteDown(data) {
+}
+
 function buyItem(id) {
     url = '{% url buy item_id=0 %}'.replace('0', id);
     $.post(url,
@@ -50,6 +56,18 @@ function outOf(id) {
     var url = '{% url out item_id=0 %}'.replace('0', id);
     $.post(url,
 	   afterOut);
+}
+
+function voteUp(id) {
+    var url = '{% url vote_up item_id=0 %}'.replace('0', id);
+    $.post(url,
+	   afterVoteUp);
+}
+
+function voteDown(id) {
+    var url = '{% url vote_down item_id=0 %}'.replace('0', id);
+    $.post(url,
+	   afterVoteDown);
 }
 
 function deleteSelectedItems() {

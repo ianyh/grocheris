@@ -3,10 +3,10 @@
 {% block script %}
 <script type="text/javascript">
     $(document).ready(function() {
-	$('.item-row, .item-row-nav').mouseenter(function() {
-	    $('.item-row-nav', this).css('visibility', 'visible');
+	$('.item-row, .item-row-nav, .item-row-vote').mouseenter(function() {
+	    $('.item-row-nav, .item-row-vote', this).css('visibility', 'visible');
 	}).mouseleave(function() {
-	    $('.item-row-nav', this).css('visibility', 'hidden');
+	    $('.item-row-nav, .item-row-vote', this).css('visibility', 'hidden');
 	});
     });
 </script>

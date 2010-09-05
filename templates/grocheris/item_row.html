@@ -15,8 +15,24 @@
       </div>
 
       <div class="item-row-name">
-	<input id="{{ item.id }}" type="checkbox" />
-	{{ item }}
+	<table>
+	  <tr style="height: 100%;">
+	    <td style="vertical-align: middle;">
+	      <input id="{{ item.id }}" type="checkbox" />
+	    </td>
+	    <td style="vertical-align: middle;">
+	      {{ item }}
+	    </td>
+	    <td class="item-row-vote" style="vertical-align: middle; visibility: hidden;">
+	      <a href="" onClick="voteUp({{ item.id }}); return false;">
+		<img class="item-row-vote-up" src="{% media 'up.png' %}" />
+	      </a><br />
+	      <a href="" onClick="voteDown({{ item.id }}); return false;">
+		<img class="item-row-vote-down" src="{% media 'down.png' %}" />
+	      </a>
+	    </td>
+	  </tr>
+	</table>
       </div>
     </td>
   </tr>

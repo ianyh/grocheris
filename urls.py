@@ -10,5 +10,7 @@ urlpatterns = patterns('grocheris.views',
                        url(r'^item/(?P<item_id>\d+)/low/$', 'low_item', name='low'),
                        url(r'^item/(?P<item_id>\d+)/out/$', 'out_item', name='out'),
                        url(r'^item/(?P<item_id>\d+)/delete/$', 'delete_item', name='delete'),
+                       url(r'^item/(?P<item_id>\d+)/voteup/$', 'vote_up', name='vote_up'),
+                       url(r'^item/(?P<item_id>\d+)/votedown/$', 'vote_down', name='vote_down'),
                        )
 
