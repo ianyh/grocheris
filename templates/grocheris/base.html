@@ -35,9 +35,13 @@ function afterBuy(data) {
 }
 
 function afterVoteUp(data) {
+    if (data) {
+	$('#item-' + data['id'] + '-vote-count').html(data['votes']);
+    }
 }
 
 function afterVoteDown(data) {
+    afterVoteUp(data);
 }
 
 function buyItem(id) {
@@ -158,6 +162,7 @@ function buySelectedItems() {
       .item-row-nav {
 	  float: right;
 	  visibility: hidden;
+	  text-align: right;
       }
 
       .item-row-name {

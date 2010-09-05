@@ -137,7 +137,7 @@ def vote_up(request, item_id=None):
             item.votes += 1
             item.save()
 
-            json = simplejson.dumps({ 'votes' : item.votes })
+            json = simplejson.dumps({ 'id' : item.id, 'votes' : item.votes })
             return HttpResponse(json, mimetype='application/json')
     raise Http404()
 
@@ -149,7 +149,7 @@ def vote_down(request, item_id=None):
                 item.votes -= 1
                 item.save()
             
-            json = simplejson.dumps({ 'votes' : item.votes })
+            json = simplejson.dumps({ 'id' : item.id, 'votes' : item.votes })
             return HttpResponse(json, mimetype='application/json')
 
     raise Http404()

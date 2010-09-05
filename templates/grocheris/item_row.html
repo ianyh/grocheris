@@ -11,7 +11,8 @@
 	{% endif %}
 	{% if show_buy %}
 	<input id="item-{{ item.id }}-buy-button" type="button" value="bought it" onClick="buyItem({{ item.id }})" />
-	{% endif %}
+	{% endif %}<br />
+	votes: <div id="item-{{ item.id }}-vote-count" style="margin-right: 8px; display: inline;">{{ item.votes }}</div>
       </div>
 
       <div class="item-row-name">
@@ -34,5 +35,6 @@
 	  </tr>
 	</table>
       </div>
+
     </td>
   </tr>
