@@ -68,7 +68,7 @@ function buyItem(id) {
 
 <div id="add-item" style="margin-top: 10px; margin-bottom: 10px;">
   <form id="add_item_form" method="post">
-    {{ add_form }}
+    {{ add_form.name.label }}: {{ add_form.name }}
     <input type="submit" value="Add Item" />
   </form>
 </div>
