@@ -10,10 +10,21 @@
 	});
     });
 
+function removeStockItemRow(data) {
+    if (data) {
+	if ($('#item-table tr').length == 2) {
+	    $('#item-table').fadeOut('fast');
+	    $('#no-items').fadeIn('fast');
+	}
+
+	removeItemRow(data);
+    }
+}
+
 function outOf(id) {
     var url = '{% url out item_id=0 %}'.replace('0', id);
     $.post(url,
-	   removeItemRow);
+	   removeStockItemRow);
 }
 </script>
 {% endblock %}
@@ -28,6 +39,7 @@ function outOf(id) {
 <input type="button" value="we're low" onClick="lowSelectedItems();" />
 <input type="button" value="we're out" onClick="outSelectedItems();" />
 
+<h3 id="no-items"{% if items %} style="display: none;"{% endif %}>No items</h3>
 {% if items %}
 <table id="item-table">
   <tr>
@@ -42,7 +54,7 @@ function outOf(id) {
   {% endfor %}
 </table>
 {% else %}
-<h3>No items</h3>
+
 {% endif %}
   
 {% endblock %}
