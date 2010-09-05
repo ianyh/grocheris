@@ -14,23 +14,24 @@ function toggleSelection(checkbox) {
 
 function removeItemRow(data) {
     $('#item-' + data['id']).fadeOut('fast');
+    $('#item-' + data['id']).remove();
 }
 
 function afterLow(data) {
     $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
-    $('#item-' + data['id']).addClass('low');
+    $('#item-' + data['id'] + ' > td').addClass('low');
 }
 
 function afterOut(data) {
     $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
     $('#item-' + data['id'] + '-out-button').attr('disabled', 'disabled');
-    $('#item-' + data['id']).addClass('out');
+    $('#item-' + data['id'] + ' > td').addClass('out');
 }
 
 function afterBuy(data) {
     $('#item-' + data['id'] + '-low-button').removeAttr('disabled');
     $('#item-' + data['id'] + '-out-button').removeAttr('disabled');
-    $('#item-' + data['id']).removeClass('low out');
+    $('#item-' + data['id'] + ' > td').removeClass('low out');
 }
 
 function buyItem(id) {

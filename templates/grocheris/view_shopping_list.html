@@ -41,10 +41,20 @@ function addItemRow(data) {
     }
 }
 
+function removeShoppingListItemRow(data) {
+    if (data) {
+	if ($('#item-table tr').length == 2) {
+	    $('#item-table').fadeOut('fast');
+	    $('#no-items').fadeIn('fast');
+	}
+	removeItemRow(data);
+    }
+}
+
 function buyItem(id) {
     url = '{% url buy item_id=0 %}'.replace('0', id);
     $.post(url,
-	   removeItemRow);
+	   removeShoppingListItemRow);
 }
 
 </script>
@@ -66,9 +76,7 @@ function buyItem(id) {
 <input type="button" value="delete" onClick="deleteSelectedItems();" />
 <input type="button" value="bought it" onClick="buySelectedItems();" />
 
-{% if not items %}
-<h3 id="no-items">No items</h3>
-{% endif %}
+<h3 id="no-items"{% if items %} style="display: none;"{% endif %}>No items</h3>
 <table id="item-table"{% if not items %} style="display: none;"{% endif %}>
   <tr>
     <td class="item-row">
