@@ -8,37 +8,31 @@
 	    url: '{% url add_item %}',
 	    dataType: 'json',
 	    success: addItemRow,
-	    beforeSubmit: beforeForm
+	    beforeSubmit: function(){}
 	};
 
 	$('#add_item_form').ajaxForm(options);
 
-	$('.item-row, .item-row-nav, .delete').mouseenter(function() {
-	    $('.delete, .item-row-nav', this).css('visibility', 'visible');
+	$('.item-row, .item-row-nav').mouseenter(function() {
+	    $('.item-row-nav', this).css('visibility', 'visible');
 	}).mouseleave(function() {
-	    $('.delete, .item-row-nav, .delete', this).css('visibility', 'hidden');
+	    $('.item-row-nav', this).css('visibility', 'hidden');
 	});
     });
 
 function addItemRow(data) {
     if (data) {
-	row = '<tr><td class="item-row" id="item-' + data['id'] + '" style="display:none;">' +
-	    '<div class="delete"><input type="button" value="delete" onClick="deleteItem(' + data['id'] + ');" /></div>' + 
-	    '<div class="item-row-nav"><input type="button" value="bought it" onClick="buyItem(' + data['id'] + ');" /></div>' +
-	    data['name'] + '</td></tr>';
-	$('#item-table > tbody:first').prepend(row);
-	$('#item-table td:first').mouseenter(function() {
-	    $('.delete, .item-row-nav', this).css('visibility', 'visible');
-	}).mouseleave(function() {
-	    $('.delete, .item-row-nav, .delete', this).css('visibility', 'hidden');
-	});	    
-	$('#item-table td:first').fadeIn('fast');
-    }
-}
-
-function removeItemRow(data) {
-    if (data) {
-	$('#item-' + data['id']).fadeOut('fast');
+	var url = '{% url view_item item_id=0 %}'.replace('0', data['id']);
+	$.post(url,
+	       function(data) {
+		   $('#item-table tr:first').after(data['html']);
+		   $('#item-' + data['id']).mouseenter(function() {
+		       $('.item-row-nav', this).css('visibility', 'visible');
+		   }).mouseleave(function() {
+		       $('.item-row-nav', this).css('visibility', 'hidden');
+		   });
+		   $('#item-' + data['id']).fadeIn('fast');
+	       });
     }
 }
 
@@ -48,8 +42,6 @@ function buyItem(id) {
 	   removeItemRow);
 }
 
-function beforeForm() {
-}
 </script>
 {% endblock %}
 
@@ -66,7 +58,17 @@ function beforeForm() {
   </form>
 </div>
 
+<input type="button" value="delete" onClick="deleteSelectedItems();" />
+<input type="button" value="bought it" onClick="buySelectedItems();" />
+
 <table id="item-table">
+  <tr>
+    <td class="item-row">
+      <div class="item-row-name">
+	<input type="checkbox" onClick="toggleSelection(this);" />
+      </div>
+    </td>
+  </tr>
   {% if items %}
   {% for item in items %}
   {% include 'grocheris/item_row.html' %}

@@ -54,6 +54,7 @@ function outOf(id) {
 function deleteSelectedItems() {
     $.each($('input:checked'), function(index, value) {
 	var id = value.id;
+	if (id == '') return;
 	var url = '{% url delete item_id=0 %}'.replace('0', id);
 	$.post(url,
 	       function (data) {

@@ -3,33 +3,17 @@
 {% block script %}
 <script type="text/javascript">
     $(document).ready(function() {
-	$('.item-row, .item-row-nav, .delete').mouseenter(function() {
-	    $('.delete, .item-row-nav', this).css('visibility', 'visible');
+	$('.item-row, .item-row-nav').mouseenter(function() {
+	    $('.item-row-nav', this).css('visibility', 'visible');
 	}).mouseleave(function() {
-	    $('.delete, .item-row-nav, .delete', this).css('visibility', 'hidden');
+	    $('.item-row-nav', this).css('visibility', 'hidden');
 	});
     });
-
-function lowOn(id) {
-    var url = '{% url low item_id=0 %}'.replace('0', id);
-    $.post(url,
-	   function (data) {
-	       $('#item-' + data['id'] + '-low-button').attr('disabled', 'disabled');
-	       $('#item-' + data['id']).addClass('low');
-	   });
-}
 
 function outOf(id) {
     var url = '{% url out item_id=0 %}'.replace('0', id);
     $.post(url,
 	   removeItemRow);
-}
-
-function removeItemRow(data) {
-    if (data) {
-	console.log('item was outed');
-	$('#item-' + data['id']).fadeOut('fast');
-    }
 }
 </script>
 {% endblock %}
@@ -40,8 +24,19 @@ function removeItemRow(data) {
 
 <h2>Stuff we have</h2>
 
+<input type="button" value="delete" onClick="deleteSelectedItems();" />
+<input type="button" value="we're low" onClick="lowSelectedItems();" />
+<input type="button" value="we're out" onClick="outSelectedItems();" />
+
 {% if items %}
 <table id="item-table">
+  <tr>
+    <td class="item-row">
+      <div class="item-row-name">
+	<input type="checkbox" onClick="toggleSelection(this);" />
+      </div>
+    </td>
+  </tr>
   {% for item in items %}
   {% include 'grocheris/item_row.html' %}
   {% endfor %}

@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
 
@@ -79,7 +80,7 @@ def low_item(request, item_id=None):
         json = simplejson.dumps({ 'id' : item.id })
         return HttpResponse(json, mimetype='application/json')
     
-    return HttpRespinse(status=404)
+    return HttpResponse(status=404)
 
 @login_required
 def out_item(request, item_id=None):
@@ -98,16 +99,38 @@ def out_item(request, item_id=None):
 def delete_item(request, item_id=None):
     item = GroceryItem.objects.get(pk=item_id)
     if item:
-        json = simplejson.dumps({ 'id' : item.id })
         item.delete()
+        json = simplejson.dumps({ 'id' : item_id })
         return HttpResponse(json, mimetype='application/json')
 
-    return HttpResponse(status=404)
+    raise Http404()
+
+@login_required
+def item_row_html(request, item_id=None):
+    if request.method == "POST":
+        item = GroceryItem.objects.get(pk=item_id)
+        if item:
+            show_buy = True
+            html = render_to_string('grocheris/item_row.html',
+                                    locals())
+            json = simplejson.dumps({ 'html' : html })
+            return HttpResponse(json, mimetype='application/json')
+    return HttpResponse()
+
+@login_required
+def view_item(request, item_id=None):
+    if request.method == "POST":
+        item = GroceryItem.objects.get(pk=item_id)
+        if item:
+            show_buy = True
+            invisible = True
+            html = render_to_string('grocheris/item_row.html',
+                                    locals())
+            json = simplejson.dumps({ 'html' : html, 'id' : item.id })
+            return HttpResponse(json, mimetype='application/json')
+    return HttpResponse()
 
 """
-def view_item(request, item_id=None):
-    pass
-
 def tag_item(request, item_id=None):
     pass
 
