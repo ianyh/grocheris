@@ -88,6 +88,16 @@ def out_item(request, item_id=None):
     
     return HttpResponse(status=404)
 
+@login_required
+def delete_item(request, item_id=None):
+    item = GroceryItem.objects.get(pk=item_id)
+    if item:
+        json = simplejson.dumps({ 'id' : item.id })
+        item.delete()
+        return HttpResponse(json, mimetype='application/json')
+
+    return HttpResponse(status=404)
+
 """
 def view_item(request, item_id=None):
     pass

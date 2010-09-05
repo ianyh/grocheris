@@ -8,5 +8,6 @@ urlpatterns = patterns('grocheris.views',
                        url(r'^item/(?P<item_id>\d+)/buy/$', 'buy_item', name='buy'),
                        url(r'^item/(?P<item_id>\d+)/low/$', 'low_item', name='low'),
                        url(r'^item/(?P<item_id>\d+)/out/$', 'out_item', name='out'),
+                       url(r'^item/(?P<item_id>\d+)/delete/$', 'delete_item', name='delete'),
                        )
 
