@@ -41,6 +41,8 @@ function outOf(id) {
   {% include 'grocheris/item_row.html' %}
   {% endfor %}
 </table>
+{% else %}
+<h3>No items</h3>
 {% endif %}
   
 {% endblock %}
