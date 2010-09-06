@@ -9,12 +9,6 @@
 	};
 
 	$('#add_item_form').ajaxForm(options);
-
-	$('.item-row, .item-row-nav').mouseenter(function() {
-	    $('.item-row-nav', this).css('visibility', 'visible');
-	}).mouseleave(function() {
-	    $('.item-row-nav', this).css('visibility', 'hidden');
-	});
 {% endblock %}
 
 {% block script %}

@@ -6,6 +6,13 @@
     <script type="text/javascript" src="http://github.com/malsup/form/raw/master/jquery.form.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
+	$('.item-row').mouseenter(function() {
+	    $('.item-row-nav').css('visibility', 'hidden');
+	    $('.item-row-nav', this).css('visibility', 'visible');
+	}).mouseleave(function() {
+	    $('.item-row-nav').css('visibility', 'hidden');
+	});
+
 	var options = {
 	    url: '{% url add_tag %}',
 	    dataType: 'json',
