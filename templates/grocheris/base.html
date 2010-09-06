@@ -50,6 +50,15 @@ function addTag(data) {
     });
 }
 
+function removeTag(id, tag) {
+    var tagName = $('span', $(tag).parent()).html();
+    var url = '{% url remove_tag item_id=0 tag_name="foo" %}'.replace('0', id).replace('foo', tagName);
+    $.post(url,
+	   function(data) {
+	       $(tag).parent().remove();
+	   });
+}
+
 function removeItemRow(data) {
     $('#item-' + data['id']).fadeOut('fast');
     $('#item-' + data['id']).remove();

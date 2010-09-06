@@ -145,13 +145,23 @@ def add_tag(request):
         item_id = request.POST['item_id']
         item = GroceryItem.objects.get(pk=item_id)
         if item:
-            print item.tags
             tags = parse_tag_input(request.POST['name'])
             [Tag.objects.add_tag(item, tag) for tag in tags]
-            print item.tags
 
             json = simplejson.dumps({ 'tags' : tags, 'id' : item_id })
             return HttpResponse(json, mimetype='application/json')
+
+    raise Http404()
+
+@login_required
+def remove_tag(request, item_id=None, tag_name=None):
+    if request.method == 'POST':
+        item = GroceryItem.objects.get(pk=item_id)
+        if item and tag_name:
+            Tag.objects.remove_tag(item, tag_name)
+            item.save()
+            
+            return HttpResponse()
 
     raise Http404()
 
