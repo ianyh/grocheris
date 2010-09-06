@@ -1,9 +1,6 @@
 {% extends 'grocheris/base.html' %}
 
-{% block script %}
-{{ add_form.media }}
-<script type="text/javascript">
-    $(document).ready(function() {
+{% block document_ready %}
 	var options = {
 	    url: '{% url add_item %}',
 	    dataType: 'json',
@@ -18,8 +15,9 @@
 	}).mouseleave(function() {
 	    $('.item-row-nav', this).css('visibility', 'hidden');
 	});
-    });
+{% endblock %}
 
+{% block script %}
 function addItemRow(data) {
     if (data) {
 	if ($('#item-table').css('display') == 'none') {
@@ -56,8 +54,6 @@ function buyItem(id) {
     $.post(url,
 	   removeShoppingListItemRow);
 }
-
-</script>
 {% endblock %}
 
 {% block title %}Shopping list{% endblock %}

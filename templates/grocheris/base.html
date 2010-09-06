@@ -3,13 +3,43 @@
 <html lang="en">
   <head>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://github.com/malsup/form/raw/master/jquery.form.js"></script>
     <script type="text/javascript">
+    $(document).ready(function() {
+	var options = {
+	    url: '{% url add_tag %}',
+	    dataType: 'json',
+	    success: addTag
+	}
+
+	$('#add-tag-form').ajaxForm(options);
+
+	{% block document_ready %}{% endblock %}
+    });
+
 function toggleSelection(checkbox) {
     if (checkbox.checked) {
 	$(':checkbox').attr('checked', 'checked');
     } else {
 	$(':checkbox').removeAttr('checked');
     }
+}
+
+function addTagForm(id, button) {
+    $('#add-tag').offset($(button).offset());
+    $('#add-tag-id').attr('value', id);
+    $('#add-tag').css('visibility', 'visible');
+}
+
+function addTag(data) {
+    $('#add-tag').css('visibility', 'hidden');
+    var url = '{% url view_tag item_id=0 tag_name="foo" %}'.replace('0', data['id'])
+    data['tags'].forEach(function(tag) {
+	$.post(url.replace('foo', tag),
+	       function (data) {
+		   $('#item-' + data['id'] + '-tags div:last').after(data['html']);
+	       });
+    });
 }
 
 function removeItemRow(data) {
@@ -93,9 +123,9 @@ function buySelectedItems() {
     });
 }
 
-    </script>
+{% block script %}{% endblock %}
 
-    {% block script %}{% endblock %}
+    </script>
     
     <title>{% block title %}{% endblock %}</title>    
 
@@ -142,15 +172,21 @@ function buySelectedItems() {
 	  visibility: hidden;
       }
 
-      .item-row-name {
+      .item-row-select {
+	  float: left;
       }
 
-      .delete {
-	  float: left;
-	  padding-left: 2px;
-	  padding-right: 15px;
-	  font-size: 0.7em;
-	  visibility: hidden;
+      .item-row-tags {
+	  margin-left: 25px;
+	  font-size: 0.85em;
+      }
+      
+      .item-row-tag {
+	  display: inline;
+	  margin-right: 3px;
+      }
+
+      .item-row-name {
       }
 
       .low {
@@ -160,10 +196,27 @@ function buySelectedItems() {
       .out {
 	  background: #f08080;
       }
+
+      #add-tag {
+	  position: absolute;
+	  visibility: hidden;
+	  
+	  border: 1px black solid;
+	  background: #dcdcdc;
+	  font-size: 0.85 em;
+      }
     </style>
   </head>
 
   <body>
+
+    <div id="add-tag">
+      <form id="add-tag-form" method="post">
+	{{ add_tag_form.name }}
+	<input type="submit" value="tag" />
+	<input id="add-tag-id" type="hidden" name="item_id" value="" />
+      </form>
+    </div>
 
     <div id="nav">
       <a href="{% url index %}">All the stuff</a> <br />

@@ -7,5 +7,5 @@ class GroceryItemForm(forms.ModelForm):
         model = GroceryItem
         fields = ('name',)
 
-    class Media:
-        js = ('http://github.com/malsup/form/raw/master/jquery.form.js',)
+class TagForm(forms.Form):
+    name = forms.CharField(max_length=50)

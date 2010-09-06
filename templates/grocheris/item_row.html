@@ -14,9 +14,20 @@
 	{% endif %}
       </div>
 
-      <div class="item-row-name">
+      <div class="item-row-select">
 	<input id="{{ item.id }}" type="checkbox" />
+      </div>
+
+      <div class="item-row-name">
 	{{ item }}
+      </div>
+
+      <div id="item-{{ item.id }}-tags" class="item-row-tags">
+	{% for tag in item.tags %}
+	{% include 'grocheris/tag.html' %}
+	{% endfor %}
+
+	<input type="image" src="{% media 'plus.png' %}" width="12" onClick="addTagForm({{ item.id }}, this);" />
       </div>
     </td>
   </tr>
