@@ -1,5 +1,6 @@
 from django.db import models
 
+from tagging.models import Tag
 import tagging
 
 class Location(models.Model):
@@ -32,7 +33,11 @@ class GroceryItem(models.Model):
     votes = models.IntegerField(default=0)
     locations = models.ManyToManyField(Location, blank=True)
     one_shot = models.BooleanField()
-    
+
+    def delete(self):
+        Tag.objects.update_tags(self, None)
+        super(GroceryItem, self).delete()
+
     def __unicode__(self):
         return self.name
 
