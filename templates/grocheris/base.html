@@ -29,6 +29,7 @@ function addTagForm(id, button) {
     $('#add-tag').offset($(button).offset());
     $('#add-tag-id').attr('value', id);
     $('#add-tag').css('visibility', 'visible');
+    $('#add-tag input:first').focus()
 }
 
 function addTag(data) {

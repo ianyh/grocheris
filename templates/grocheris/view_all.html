@@ -3,9 +3,10 @@
 
 {% block document_ready %}
 	$('.item-row, .item-row-nav').mouseenter(function() {
+	    $('.item-row-nav').css('visibility', 'hidden');
 	    $('.item-row-nav', this).css('visibility', 'visible');
 	}).mouseleave(function() {
-	    $('.item-row-nav', this).css('visibility', 'hidden');
+	    $('.item-row-nav').css('visibility', 'hidden');
 	});
 {% endblock %}
 

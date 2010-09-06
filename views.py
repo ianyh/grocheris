@@ -59,10 +59,8 @@ def add_item(request):
             
             json = simplejson.dumps({ 'name' : item.name, 'id' : item.id })
             return HttpResponse(json, mimetype='application/json')
-        else:
-            return HttpResponse()
-    else:
-        return HttpResponse()
+
+    raise Http404()
 
 @login_required
 def buy_item(request, item_id=None):
@@ -77,7 +75,7 @@ def buy_item(request, item_id=None):
             json = simplejson.dumps({ 'id' : item.id })
             return HttpResponse(json, mimetype='application/json')
 
-    return HttpResponse(status=404)
+    raise Http404()
 
 @login_required
 def low_item(request, item_id=None):
@@ -89,7 +87,7 @@ def low_item(request, item_id=None):
         json = simplejson.dumps({ 'id' : item.id })
         return HttpResponse(json, mimetype='application/json')
     
-    return HttpResponse(status=404)
+    raise Http404()
 
 @login_required
 def out_item(request, item_id=None):
@@ -102,7 +100,7 @@ def out_item(request, item_id=None):
         json = simplejson.dumps({ 'id' : item.id })
         return HttpResponse(json, mimetype='application/json')
     
-    return HttpResponse(status=404)
+    raise Http404()
 
 @login_required
 def delete_item(request, item_id=None):
@@ -124,7 +122,8 @@ def item_row_html(request, item_id=None):
                                     locals())
             json = simplejson.dumps({ 'html' : html })
             return HttpResponse(json, mimetype='application/json')
-    return HttpResponse()
+
+    raise Http404()
 
 @login_required
 def view_item(request, item_id=None):
@@ -137,7 +136,8 @@ def view_item(request, item_id=None):
                                     locals())
             json = simplejson.dumps({ 'html' : html, 'id' : item.id })
             return HttpResponse(json, mimetype='application/json')
-    return HttpResponse()
+
+    raise Http404()
 
 @login_required
 def add_tag(request):
@@ -165,3 +165,5 @@ def view_tag(request, item_id=None, tag_name=None):
                                 locals())
         json = simplejson.dumps({ 'html' : html, 'id' : item_id })
         return HttpResponse(json, mimetype='application/json')
+
+    raise Http404()
