@@ -1,15 +1,14 @@
 {% extends 'grocheris/base.html' %}
 
-{% block script %}
-<script type="text/javascript">
-    $(document).ready(function() {
+{% block document_ready %}
 	$('.item-row, .item-row-nav').mouseenter(function() {
 	    $('.item-row-nav', this).css('visibility', 'visible');
 	}).mouseleave(function() {
 	    $('.item-row-nav', this).css('visibility', 'hidden');
 	});
-    });
+{% endblock %}
 
+{% block script %}
 function removeStockItemRow(data) {
     if (data) {
 	if ($('#item-table tr').length == 2) {
@@ -26,7 +25,6 @@ function outOf(id) {
     $.post(url,
 	   removeStockItemRow);
 }
-</script>
 {% endblock %}
 
 {% block title %}Stuff we have{% endblock %}
@@ -53,8 +51,6 @@ function outOf(id) {
   {% include 'grocheris/item_row.html' %}
   {% endfor %}
 </table>
-{% else %}
-
 {% endif %}
   
 {% endblock %}

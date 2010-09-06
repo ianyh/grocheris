@@ -1,7 +1,7 @@
 {% extends 'grocheris/base.html' %}
 
 {% block document_ready %}
-	var options = {
+	options = {
 	    url: '{% url add_item %}',
 	    dataType: 'json',
 	    success: addItemRow,
