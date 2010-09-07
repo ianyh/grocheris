@@ -1,0 +1,76 @@
+html, body {
+    font: normal 14px/20px Helvetica, Verdana;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    display: block;
+}
+
+a:link, a:visted {
+    color: #000;
+}
+
+a:hover {
+    color: #999;
+}
+
+#content {
+    width: 60%;
+    margin-left: 50px;
+}
+
+#nav {
+    float: right;
+    width: 30%;
+}
+
+#item-table {
+    width: 70%;
+    margin: 10px 10px 10px 10px;
+}
+
+.item-row {
+    border-bottom: 1px black dotted;
+}
+
+.item-row-nav {
+    float: right;
+    visibility: hidden;
+}
+
+.item-row-select {
+    float: left;
+}
+
+.item-row-tags {
+    margin-left: 25px;
+    font-size: 0.85em;
+}
+
+.item-row-tag {
+    display: inline;
+    margin-right: 3px;
+}
+
+.item-row-name {
+}
+
+.low {
+    background: #ffffe0;
+}
+
+.out {
+    background: #f08080;
+}
+
+#add-tag {
+    position: absolute;
+    visibility: hidden;
+    
+    border: 1px black solid;
+    background: #dcdcdc;
+    font-size: 0.85 em;
+}
+      
