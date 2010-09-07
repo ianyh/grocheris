@@ -64,8 +64,11 @@ def add_item(request):
             item.stock_date = datetime.now()
             item.is_out = True
             item.is_low = True
+            item.save()
             if 'locations' in request.POST:
-                item.locations = request.POST['locations']
+                for location_id in request.POST['locations']:
+                    location = Location.objects.get(pk=location_id)
+                    item.locations.add(location)
             item.save()
             
             json = simplejson.dumps({ 'name' : item.name, 'id' : item.id })
