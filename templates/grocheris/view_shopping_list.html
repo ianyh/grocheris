@@ -54,11 +54,24 @@ function buyItem(id) {
 
 {% block content %}
 
-<h2>Shopping List</h2>
+<h2>Stuff we need</h2>
+
+<h3>Make a shopping list</h3>
+
+<div id="gen-list">
+  <form target="__shopping_list" method="post" action="{% url shopping_list %}">
+    {{ gen_shopping_list_form.locations.label }}: 
+    {{ gen_shopping_list_form.locations }}
+    <input type="submit" value="generate" />
+  </form>
+</div>
+
+<hr>
 
 <div id="add-item" style="margin-top: 10px; margin-bottom: 10px;">
   <form id="add_item_form" method="post">
-    {{ add_form.name.label }}: {{ add_form.name }}
+    {{ add_form.name.label }}: {{ add_form.name }} <br />
+    Available at: {{ add_form.locations }} 
     <input type="submit" value="Add Item" />
   </form>
 </div>

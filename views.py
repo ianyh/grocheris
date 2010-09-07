@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
 
-from grocheris.models import GroceryItem
-from grocheris.forms import GroceryItemForm, TagForm
+from grocheris.models import GroceryItem, Location
+from grocheris.forms import GroceryItemForm, LocationSelectionForm, TagForm
 
 from tagging.models import Tag
 from tagging.utils import parse_tag_input
@@ -37,11 +37,22 @@ def view_in_stock(request):
 
 @login_required
 def view_shopping_list(request):
+    gen_shopping_list_form = LocationSelectionForm()
     add_form = GroceryItemForm()
     items = GroceryItem.objects.filter(is_low=True)
     show_buy = True
     return base_view('grocheris/view_shopping_list.html',
                      locals())
+
+@login_required
+def generate_shopping_list(request):
+    if request.method == 'POST':
+        location_id = request.POST['locations']
+        items = GroceryItem.objects.filter(locations__pk__contains=location_id)
+
+        return render_to_response('grocheris/shopping_list.html',
+                                  locals())
+    return HttpResponse()
 
 @login_required
 def add_item(request):

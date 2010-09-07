@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+  
+  <head>
+    <title>Shopping List</title>
+  </head>
+
+  <body>
+    <table>
+      {% for item in items %}
+      {% include 'grocheris/item_row_min.html' %}
+      {% endfor %}
+    </table>
+  </body>
+
+</html>

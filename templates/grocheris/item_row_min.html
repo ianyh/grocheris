@@ -1,0 +1,7 @@
+  <tr>
+    <td class="{% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}">
+      <div class="item-row-name">
+	{{ item }}
+      </div>
+    </td>
+  </tr>
