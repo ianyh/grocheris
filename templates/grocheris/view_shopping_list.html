@@ -4,8 +4,7 @@
 	options = {
 	    url: '{% url add_item %}',
 	    dataType: 'json',
-	    success: addItemRow,
-	    beforeSubmit: function(){}
+	    success: addItemRow
 	};
 
 	$('#add_item_form').ajaxForm(options);
@@ -50,7 +49,7 @@ function buyItem(id) {
 }
 {% endblock %}
 
-{% block title %}Shopping list{% endblock %}
+{% block title %}Stuff we need{% endblock %}
 
 {% block content %}
 
@@ -92,8 +91,6 @@ function buyItem(id) {
   {% for item in items %}
   {% include 'grocheris/item_row.html' %}
   {% endfor %}
-  {% else %}
-  <tr><td></td></tr>
   {% endif %}
 </table>
   

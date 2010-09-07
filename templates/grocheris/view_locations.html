@@ -1,0 +1,77 @@
+{% extends 'grocheris/base.html' %}
+
+{% block document_ready %}
+	options = {
+	    url: '{% url add_location %}',
+	    dataType: 'json',
+	    success: addLocationRow
+	};
+
+	$('#add_item_form').ajaxForm(options);
+{% endblock %}
+
+{% block script %}
+function addLocationRow(data) {
+    if (data) {
+	if ($('#item-table').css('display') == 'none') {
+	    $('#no-items').fadeOut('fast');
+	    $('#item-table').fadeIn('fast');
+	}
+	    
+	var url = '{% url view_location location_id=0 %}'.replace('0', data['id']);
+	$.post(url,
+	       function(data) {
+		   $('#item-table tr:first').after(data['html']);
+		   $('#item-' + data['id']).fadeIn('fast');
+	       });
+    }
+}
+
+function deleteSelectedItems() {
+    $.each($('input:checked'), function(index, value) {
+	var id = value.id;
+	if (id == '') return;
+	var url = '{% url delete_location location_id=0 %}'.replace('0', id);
+	$.post(url,
+	       function (data) {
+		   if (data) {
+		       $('#item-' + data['id']).fadeOut('fast');
+		   }
+	       });
+    });
+}
+
+{% endblock %}
+
+{% block title %}Places with stuff{% endblock %}
+
+{% block content %}
+
+<h2>Places with stuff</h2>
+
+<div id="add-item" style="margin-top: 10px; margin-bottom: 10px;">
+  <form id="add_item_form" method="post">
+    {{ add_form.name.label }}: {{ add_form.name }}
+    <input type="submit" value="Add Item" />
+  </form>
+</div>
+
+<input type="button" value="delete" onClick="deleteSelectedItems();" />
+
+<h3 id="no-items"{% if locations %} style="display: none;"{% endif %}>No locations</h3>
+<table id="item-table"{% if not locations %} style="display: none;"{% endif %}>
+  <tr>
+    <td class="item-row">
+      <div class="item-row-name">
+	<input type="checkbox" onClick="toggleSelection(this);" />
+      </div>
+    </td>
+  </tr>
+  {% if locations %}
+  {% for location in locations %}
+  {% include 'grocheris/location_row.html' %}
+  {% endfor %}
+  {% endif %}
+</table>
+
+{% endblock %}

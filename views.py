@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 from grocheris.models import GroceryItem, Location
-from grocheris.forms import GroceryItemForm, LocationSelectionForm, TagForm
+from grocheris.forms import GroceryItemForm, LocationForm, LocationSelectionForm, TagForm
 
 from tagging.models import Tag
 from tagging.utils import parse_tag_input
@@ -45,6 +45,13 @@ def view_shopping_list(request):
                      locals())
 
 @login_required
+def view_locations(request):
+    locations = Location.objects.all()
+    add_form = LocationForm()
+    return base_view('grocheris/view_locations.html',
+                     locals())
+
+@login_required
 def generate_shopping_list(request):
     if request.method == 'POST':
         location_id = request.POST['locations']
@@ -72,6 +79,19 @@ def add_item(request):
             item.save()
             
             json = simplejson.dumps({ 'name' : item.name, 'id' : item.id })
+            return HttpResponse(json, mimetype='application/json')
+
+    raise Http404()
+
+@login_required
+def add_location(request):
+    if request.method == 'POST':
+        form = LocationForm(request.POST)
+        if form.is_valid():
+            location = Location(name=request.POST['name'])
+            location.save()
+
+            json = simplejson.dumps({ 'name' : location.name, 'id' : location.id })
             return HttpResponse(json, mimetype='application/json')
 
     raise Http404()
@@ -189,5 +209,29 @@ def view_tag(request, item_id=None, tag_name=None):
                                 locals())
         json = simplejson.dumps({ 'html' : html, 'id' : item_id })
         return HttpResponse(json, mimetype='application/json')
+
+    raise Http404()
+
+@login_required
+def view_location(request, location_id=None):
+    if request.method == 'POST':
+        location = Location.objects.get(pk=location_id)
+        if location:
+            invisible = True
+            html = render_to_string('grocheris/location_row.html',
+                                    locals())
+            json = simplejson.dumps({ 'html' : html, 'id' : location.id })
+            return HttpResponse(json, mimetype='application/json')
+
+    raise Http404()
+
+@login_required
+def delete_location(request, location_id=None):
+    if request.method == 'POST':
+        location = Location.objects.get(pk=location_id)
+        if location:
+            location.delete()
+            json = simplejson.dumps({ 'id' : location_id })
+            return HttpResponse(json, mimetype='application/json')
 
     raise Http404()

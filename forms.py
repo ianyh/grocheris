@@ -7,6 +7,10 @@ class GroceryItemForm(forms.ModelForm):
         model = GroceryItem
         fields = ('name', 'locations')
 
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+
 class LocationSelectionForm(forms.Form):
     locations = forms.ModelChoiceField(queryset=Location.objects.all(), 
                                        empty_label=None)
