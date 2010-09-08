@@ -43,6 +43,7 @@ function addTagForm(id, button) {
 
 function addTag(data) {
     $('#add-tag').css('visibility', 'hidden');
+    $('#add-tag #id_name').attr('value', '');
     var url = '{% url view_tag item_id=0 tag_name="foo" %}'.replace('0', data['id'])
     data['tags'].forEach(function(tag) {
 	$.post(url.replace('foo', tag),
