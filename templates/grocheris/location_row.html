@@ -1,6 +1,6 @@
 {% load grocheris_extras %}
 
-  <tr id="item-{{ location.id }}"{% if invisible %} style="display: none;"{% endif %}>
+  <tr id="item-{{ location.id }}"{% if invisible %} class="display-none"{% endif %}>
     <td class="item-row">
       <div class="item-row-select">
 	<input id="{{ location.id }}" type="checkbox" />

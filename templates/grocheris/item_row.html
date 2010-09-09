@@ -1,6 +1,6 @@
 {% load grocheris_extras %}
 
-  <tr id="item-{{ item.id }}"{% if invisible %} style="display: none;"{% endif %}>
+  <tr id="item-{{ item.id }}"{% if invisible %} class="display-none"{% endif %}>
     <td class="item-row {% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}">
       <div class="item-row-nav">
 	{% if show_low %}

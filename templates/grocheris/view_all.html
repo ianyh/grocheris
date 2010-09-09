@@ -4,28 +4,30 @@
 
 {% block content %}
 
-<h2>All the stuff</h2>
+<h2 class="content-header">All the stuff</h2>
 
-<input type="button" value="delete" onClick="deleteSelectedItems();" />
-<input type="button" value="we're low" onClick="lowSelectedItems();" />
-<input type="button" value="we're out" onClick="outSelectedItems();" />
-<input type="button" value="bought it" onClick="buySelectedItems();" />
-
-{% if items %}
-<table id="item-table">
-  <tr>
-    <td class="item-row">
-      <div class="item-row-name">
-	<input type="checkbox" onClick="toggleSelection(this);" />
-      </div>
-    </td>
-  </tr>
-  {% for item in items %}
-  {% include 'grocheris/item_row.html' %}
-  {% endfor %}
-</table>
-{% else %}
-<h3>No items</h3>
-{% endif %}
+<div class="content-container">
+  <input type="button" value="delete" onClick="deleteSelectedItems();" />
+  <input type="button" value="we're low" onClick="lowSelectedItems();" />
+  <input type="button" value="we're out" onClick="outSelectedItems();" />
+  <input type="button" value="bought it" onClick="buySelectedItems();" />
+  
+  {% if items %}
+  <table id="item-table">
+    <tr>
+      <td class="item-row">
+	<div class="item-row-name">
+	  <input type="checkbox" onClick="toggleSelection(this);" />
+	</div>
+      </td>
+    </tr>
+    {% for item in items %}
+    {% include 'grocheris/item_row.html' %}
+    {% endfor %}
+  </table>
+  {% else %}
+  <h3>No items</h3>
+  {% endif %}
+</div>
   
 {% endblock %}

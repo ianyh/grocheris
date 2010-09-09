@@ -26,6 +26,20 @@ a:hover {
     width: 30%;
 }
 
+#add-tag {
+    position: absolute;
+    visibility: hidden;
+    
+    border: 1px black solid;
+    background: #dcdcdc;
+    font-size: 0.85 em;
+}
+
+#add-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 #item-table {
     width: 70%;
     margin: 10px 10px 10px 10px;
@@ -65,12 +79,6 @@ a:hover {
     background: #f08080;
 }
 
-#add-tag {
-    position: absolute;
-    visibility: hidden;
-    
-    border: 1px black solid;
-    background: #dcdcdc;
-    font-size: 0.85 em;
+.display-none {
+    display: none;
 }
-      

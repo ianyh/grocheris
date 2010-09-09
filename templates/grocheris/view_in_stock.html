@@ -23,26 +23,28 @@ function outOf(id) {
 
 {% block content %}
 
-<h2>Stuff we have</h2>
+<h2 class="content-header">Stuff we have</h2>
 
-<input type="button" value="delete" onClick="deleteSelectedItems();" />
-<input type="button" value="we're low" onClick="lowSelectedItems();" />
-<input type="button" value="we're out" onClick="outSelectedItems();" />
+<div class="content-container">
+  <input type="button" value="delete" onClick="deleteSelectedItems();" />
+  <input type="button" value="we're low" onClick="lowSelectedItems();" />
+  <input type="button" value="we're out" onClick="outSelectedItems();" />
 
-<h3 id="no-items"{% if items %} style="display: none;"{% endif %}>No items</h3>
-{% if items %}
-<table id="item-table">
-  <tr>
-    <td class="item-row">
-      <div class="item-row-name">
-	<input type="checkbox" onClick="toggleSelection(this);" />
-      </div>
-    </td>
-  </tr>
-  {% for item in items %}
-  {% include 'grocheris/item_row.html' %}
-  {% endfor %}
-</table>
-{% endif %}
+  <h3 id="no-items"{% if items %} class="display-none"{% endif %}>No items</h3>
+  {% if items %}
+  <table id="item-table">
+    <tr>
+      <td class="item-row">
+	<div class="item-row-name">
+	  <input type="checkbox" onClick="toggleSelection(this);" />
+	</div>
+      </td>
+    </tr>
+    {% for item in items %}
+    {% include 'grocheris/item_row.html' %}
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
   
 {% endblock %}
