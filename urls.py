@@ -10,6 +10,7 @@ urlpatterns = patterns('grocheris.views',
                        url(r'^add_item/$', 'add_item', name='add_item'),
                        url(r'^add_location/$', 'add_location', name='add_location'),
                        url(r'^add_tag/$', 'add_tag', name='add_tag'),
+                       url(r'^add_location_to_item/$', 'add_location_to_item', name='add_location_to_item'),
                        
                        url(r'^item/(?P<item_id>\d+)/$', 'view_item', name='view_item'),
                        url(r'^item/(?P<item_id>\d+)/buy/$', 'buy_item', name='buy'),

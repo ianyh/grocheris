@@ -8,6 +8,10 @@
     <script type="text/javascript" src="http://github.com/malsup/form/raw/master/jquery.form.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
+	$('.item-locations').change(function() {
+	    $(this).ajaxSubmit();
+	});
+
 	$('.item-row').mouseenter(function() {
 	    $('.item-row-nav').css('visibility', 'hidden');
 	    $('.item-row-nav', this).css('visibility', 'visible');

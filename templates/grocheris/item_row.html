@@ -1,7 +1,7 @@
 {% load grocheris_extras %}
 
   <tr id="item-{{ item.id }}"{% if invisible %} class="display-none"{% endif %}>
-    <td class="item-row {% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}">
+    <td class="item-row{% if item.is_out %} out{% else %}{% if item.is_low %} low{% endif %}{% endif %}">
       <div class="item-row-nav">
 	<div style="float: right;">
 	  {% if show_low %}
@@ -15,11 +15,14 @@
 	  {% endif %}
 	</div>
 
-	<select id="item-{{ item.id }}-locations" multiple="multiple" size="3">
-	  {% for loc in locations %}
-	  <option value="{{ loc.id }}"{% if loc in item.locations.all %} selected="selected"{% endif %}>{{ loc }}</option>
-	  {% endfor %}
-	</select>
+	<form id="item-{{ item.id }}-locations" class="item-locations" action="{% url add_location_to_item %}" method="post">
+	  <input type="hidden" name="item_id" value="{{ item.id }}" />
+	  <select name="location_ids"  multiple="multiple">
+	    {% for loc in locations %}
+	    <option value="{{ loc.id }}"{% if loc in item.locations.all %} selected="selected"{% endif %}>{{ loc }}</option>
+	    {% endfor %}
+	  </select>
+	</form>
       </div>
 
       <div class="item-row-select">

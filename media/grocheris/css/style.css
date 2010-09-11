@@ -54,6 +54,10 @@ a:hover {
     visibility: hidden;
 }
 
+.item-locations {
+    display: inline;
+}
+
 .item-row-select {
     float: left;
 }

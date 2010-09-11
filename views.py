@@ -238,3 +238,16 @@ def delete_location(request, location_id=None):
             return HttpResponse(json, mimetype='application/json')
 
     raise Http404()
+
+@login_required
+def add_location_to_item(request):
+    if request.method == 'POST':
+        item = GroceryItem.objects.get(pk=request.POST['item_id'])
+        locations = [Location.objects.get(pk=location_id) for location_id in request.POST.getlist('location_ids')]
+        
+        item.locations.clear()
+        for location in locations:
+            item.locations.add(location)
+        item.save()
+
+        return HttpResponse()
