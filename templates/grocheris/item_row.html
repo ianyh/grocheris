@@ -3,15 +3,23 @@
   <tr id="item-{{ item.id }}"{% if invisible %} class="display-none"{% endif %}>
     <td class="item-row {% if item.is_out %}out{% else %}{% if item.is_low %}low{% endif %}{% endif %}">
       <div class="item-row-nav">
-	{% if show_low %}
-	<input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" {% if item.is_low %}disabled="disabled" {% endif %}/>
-	{% endif %}
-	{% if show_out %}
-	<input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" {% if item.is_out %}disabled="disabled" {% endif %}/>
-	{% endif %}
-	{% if show_buy %}
-	<input id="item-{{ item.id }}-buy-button" type="button" value="bought it" onClick="buyItem({{ item.id }})" />
-	{% endif %}
+	<div style="float: right;">
+	  {% if show_low %}
+	  <input id="item-{{ item.id }}-low-button" type="button" value="we're low" onClick="lowOn({{ item.id }})" {% if item.is_low %}disabled="disabled" {% endif %}/><br />
+	  {% endif %}
+	  {% if show_out %}
+	  <input id="item-{{ item.id }}-out-button" type="button" value="we're out" onClick="outOf({{ item.id }})" {% if item.is_out %}disabled="disabled" {% endif %}/><br />
+	  {% endif %}
+	  {% if show_buy %}
+	  <input id="item-{{ item.id }}-buy-button" type="button" value="bought it" onClick="buyItem({{ item.id }})" />
+	  {% endif %}
+	</div>
+
+	<select id="item-{{ item.id }}-locations" multiple="multiple" size="3">
+	  {% for loc in locations %}
+	  <option value="{{ loc.id }}"{% if loc in item.locations.all %} selected="selected"{% endif %}>{{ loc }}</option>
+	  {% endfor %}
+	</select>
       </div>
 
       <div class="item-row-select">

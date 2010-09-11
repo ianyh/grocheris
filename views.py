@@ -12,11 +12,13 @@ from grocheris.forms import GroceryItemForm, LocationForm, LocationSelectionForm
 from tagging.models import Tag
 from tagging.utils import parse_tag_input
 
-def base_view(template, context):
+def base_view(template, context, render_method=render_to_response):
     add_tag_form = TagForm()
+    locations = Location.objects.all()
+    
     context.update(locals())
-    return render_to_response(template,
-                              context)
+    return render_method(template,
+                         context)
 
 @login_required
 def view_all(request):
@@ -166,8 +168,9 @@ def view_item(request, item_id=None):
         if item:
             show_buy = True
             invisible = True
-            html = render_to_string('grocheris/item_row.html',
-                                    locals())
+            html = base_view('grocheris/item_row.html',
+                             locals(),
+                             render_method=render_to_string)
             json = simplejson.dumps({ 'html' : html, 'id' : item.id })
             return HttpResponse(json, mimetype='application/json')
 
